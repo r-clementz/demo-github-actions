@@ -13,7 +13,7 @@
 					"script": {
 						"exec": [
 							"// Just change this if running test on another domain/server",
-							"pm.environment.set('api', 'http://localhost:3000/api');",
+							"pm.environment.set('api', 'http://localhost:4000/api');",
 							"",
 							"// A counter for mock data",
 							"pm.environment.set('counter', 0);",

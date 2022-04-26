@@ -1,0 +1,2 @@
+# java-21-demo-github-actions
+Example of api-tests with Newman + CI with GitHub Actions

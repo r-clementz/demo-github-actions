@@ -1,0 +1,1057 @@
+{
+	"info": {
+		"_postman_id": "082111ef-5076-47d8-ba35-b22e19bf6b2f",
+		"name": "Test author api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Log out (just in case we are logged in)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"// Just change this if running test on another domain/server",
+							"pm.environment.set('api', 'http://localhost:3000/api');",
+							"",
+							"// A counter for mock data",
+							"pm.environment.set('counter', 0);",
+							"",
+							"// Some mock data for authors",
+							"pm.environment.set('mockAuthors',[{",
+							"  \"name\": \"Octavia Klazenga\",",
+							"  \"description\": \"Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.\"",
+							"}, {",
+							"  \"name\": \"Abel Knowles\",",
+							"  \"description\": \"Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.\"",
+							"}, {",
+							"  \"name\": \"Dru Lewerenz\",",
+							"  \"description\": \"Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis.Sed ante. Vivamus tortor. Duis mattis egestas metus.\"",
+							"}, {",
+							"  \"name\": \"Jerrilyn Linay\",",
+							"  \"description\": \"Cras mi pede, malesuada in, imperdiet et, commodo vulputate, justo. In blandit ultrices enim. Lorem ipsum dolor sit amet, consectetuer adipiscing elit.Proin interdum mauris non ligula pellentesque ultrices. Phasellus id sapien in sapien iaculis congue. Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl.Aenean lectus. Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.\"",
+							"}, {",
+							"  \"name\": \"Shayne Gallo\",",
+							"  \"description\": \"In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.\"",
+							"}]);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/login",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Posting an author should not be allowed when not logged in",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that response status is 405', () => {",
+							"    pm.expect(pm.response.code).to.equal(405);",
+							"});",
+							"",
+							"pm.test('Check that we have a correct error message', () => {",
+							"    pm.expect(response._error).to.equal('Not allowed!');",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Donald Dock\",\n    \"description\": \"I am a Duck!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/authors",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Changing/putting an author should not be allowed when not logged in",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that response status is 405', () => {",
+							"    pm.expect(pm.response.code).to.equal(405);",
+							"});",
+							"",
+							"pm.test('Check that we have a correct error message', () => {",
+							"    pm.expect(response._error).to.equal('Not allowed!');",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"I am a Duck!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/authors/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Changing/patching an author should not be allowed when not logged in Copy",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that response status is 405', () => {",
+							"    pm.expect(pm.response.code).to.equal(405);",
+							"});",
+							"",
+							"pm.test('Check that we have a correct error message', () => {",
+							"    pm.expect(response._error).to.equal('Not allowed!');",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"I am a Duck!\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/authors/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deleting an author should not be allowed when not logged in Copy 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that response status is 405', () => {",
+							"    pm.expect(pm.response.code).to.equal(405);",
+							"});",
+							"",
+							"pm.test('Check that we have a correct error message', () => {",
+							"    pm.expect(response._error).to.equal('Not allowed!');",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/authors/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login as superadmin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Expect to be logged in a superadmin - expect anna to exist', () => {",
+							"    pm.expect(response.userRole).to.equal('superadmin'); ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"anna.larsson@gmail.com\",\n    \"password\": \"12345678\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/login",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create an author",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"console.log('POST',counter, authors[counter]);",
+							"",
+							"// Set the environmemnt variables for the author we want to create right now",
+							"Object.entries(authors[counter]).forEach(([key, val]) => {",
+							"    pm.environment.set(key, val);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that the db reports 1 change', () => {",
+							"    pm.expect(response.changes).to.equal(1);",
+							"});",
+							"",
+							"pm.test('Check that we get the lastInsertRowid back as a number', () => {",
+							"    pm.expect(typeof response.lastInsertRowid).to.equal('number');",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// Save the id on the mock author",
+							"authors[counter].id = response.lastInsertRowid;",
+							"pm.environment.set('mockAuthors', authors);",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Create an author');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"description\": \"{{description}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/authors",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get an author",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"// Set the id of the current author as an environment variable",
+							"pm.environment.set('id', authors[counter].id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// This mainly tests that the author is saved",
+							"// and that have no db truncation errors",
+							"pm.test('Test that we saved the author correctly in the db', () => {",
+							"    pm.expect(response).to.deep.equal(authors[counter]);",
+							"    console.log('response', response);",
+							"    console.log('current author', authors[counter]);",
+							"});",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Get an author');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/authors/{{id}}",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all authors (compare the ones we have added)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"let response = pm.response.json();",
+							"",
+							"let toCompare = response.slice(-authors.length);",
+							"",
+							"pm.test(\"Response time is less than 5000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(5000);",
+							"});",
+							"",
+							"pm.test('The last ' + authors.length + ' authors in the list should be identical to our mock data', () => {",
+							"    pm.expect(toCompare).to.be.deep.equal(authors);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/authors",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Changes to an author should work",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"// Randomize which key/property to cahnge and change it",
+							"let keyToChange = Math.random() < 0.5 ? 'name' : 'description';",
+							"authors[counter][keyToChange] += Math.random();",
+							"pm.environment.set('mockAuthors', authors);",
+							"",
+							"// Set the environmemnt variables for the author we want to create right now",
+							"Object.entries(authors[counter]).forEach(([key, val]) => {",
+							"    pm.environment.set(key, val);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"console.log(\"HELLOO COUNTER\", counter)",
+							"",
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that the db reports 1 change', () => {",
+							"    pm.expect(response.changes).to.equal(1);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"console.log(authors[counter]);",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Changes to an author should work');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"  console.log(authors);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"description\": \"{{description}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/authors/{{id}}",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get an author after put change",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"// Set the id of the current author as an environment variable",
+							"console.log('counter', counter);",
+							"console.log('author', authors[counter])",
+							"pm.environment.set('id', authors[counter].id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// This mainly tests that the author is saved",
+							"// and that have no db truncation errors",
+							"pm.test('Test that we saved the author correctly in the db', () => {",
+							"    pm.expect(response).to.deep.equal(authors[counter]);",
+							"    console.log('response', response);",
+							"    console.log('current author', authors[counter]);",
+							"});",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Get an author after put change');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/authors/{{id}}",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Changes to an author should work patch",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"// Randomize which key/property to cahnge and change it",
+							"let keyToChange = Math.random() < 0.5 ? 'name' : 'description';",
+							"authors[counter][keyToChange] += Math.random();",
+							"pm.environment.set('mockAuthors', authors);",
+							"",
+							"// Set the environmemnt variables for the author we want to create right now",
+							"Object.entries(authors[counter]).forEach(([key, val]) => {",
+							"    pm.environment.set(key, val);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that the db reports 1 change', () => {",
+							"    pm.expect(response.changes).to.equal(1);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Changes to an author should work patch');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{name}}\",\n    \"description\": \"{{description}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/authors/{{id}}",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get an author after patch change",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"// Set the id of the current author as an environment variable",
+							"pm.environment.set('id', authors[counter].id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// This mainly tests that the author is saved",
+							"// and that have no db truncation errors",
+							"pm.test('Test that we saved the author correctly in the db', () => {",
+							"    pm.expect(response).to.deep.equal(authors[counter]);",
+							"    console.log('response', response);",
+							"    console.log('current author', authors[counter]);",
+							"});",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Get an author after patch change');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/authors/{{id}}",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an author",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"pm.environment.set('id', authors[counter].id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that the db reports 1 change', () => {",
+							"    pm.expect(response.changes).to.equal(1);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Delete an author');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/authors/{{id}}",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try to delete a non-existant author",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"pm.environment.set('id', authors[counter].id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"let response = pm.response.json();",
+							"",
+							"pm.test('Check that the db reports 1 change', () => {",
+							"    pm.expect(response.changes).to.equal(0);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Try to delete a non-existant author');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/authors/{{id}}",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get an non-existant author",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"// Set the id of the current author as an environment variable",
+							"pm.environment.set('id', authors[counter].id);"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let response = pm.response.json();",
+							"let counter = pm.environment.get('counter');",
+							"let authors = pm.environment.get('mockAuthors');",
+							"",
+							"pm.test(\"Response time is less than 1000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);",
+							"});",
+							"",
+							"// Since we have deleted the author we should get null back",
+							"pm.test('Test that we saved the author correctly in the db', () => {",
+							"    pm.expect(response).to.equal(null);",
+							"});",
+							"",
+							"// The api should return status code 404 for non-existant entitites",
+							"pm.test('Status code 404 should be returned', () => {",
+							"    pm.expect(pm.response.code).to.equal(404);",
+							"})",
+							"",
+							"// Add 1 to the counter",
+							"counter++;",
+							"pm.environment.set('counter', counter);",
+							"",
+							"// \"Loop\" - create another author if there are",
+							"// authors left to create",
+							"if(authors[counter]){",
+							"  postman.setNextRequest('Get a non-existant author');",
+							"}",
+							"else {",
+							"  pm.environment.set('counter', 0);",
+							"}",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/authors/{{id}}",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"authors",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,5 +1,6 @@
 {
   "name": "vite-proxy-build-example",
+  "type": "module",
   "private": true,
   "version": "0.0.0",
   "scripts": {
@@ -27,6 +28,8 @@
     "@wdio/spec-reporter": "^7.19.5",
     "chromedriver": "^100.0.0",
     "dotenv": "^16.0.0",
+    "fetch": "^1.1.0",
+    "jest": "^28.0.2",
     "vite": "^2.9.0",
     "wdio-chromedriver-service": "^7.3.2"
   }

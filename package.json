@@ -1,12 +1,14 @@
 {
   "name": "vite-proxy-build-example",
+  "type": "module",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "start": "concurrently npm:backend npm:dev",
     "backend": "nodemon backend/index",
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "unit-tests": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
   },
   "dependencies": {
     "better-express-store": "^1.0.4",
@@ -20,6 +22,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
+    "jest": "^28.0.2",
+    "node-fetch": "^3.2.3",
     "vite": "^2.9.0"
   }
 }

@@ -23,12 +23,17 @@ main {
   padding: 20px;
 }
 
-.person {
+.author {
   cursor: pointer;
   border-bottom: 1px solid #999;
   padding-bottom: 5px;
 }
 
-.person:nth-child(odd) h3 {
+.author:nth-child(odd) h3 {
   color: rgb(52, 56, 191);
+}
+
+.author-name {
+  user-select: none;
+  -webkit-user-select: none;
 }

@@ -10,7 +10,7 @@
     "build": "vite build",
     "api-tests": "newman run api-tests/author-api.postman_collection.json",
     "wdio": "wdio run wdio.conf.js",
-    "unit-tests": "node jest-run-as-module.cjs module && node --experimental-vm-modules node_modules/jest/bin/jest.js && node jest-run-as-module.cjs commonjs"
+    "unit-tests": "node jest-run-as-module.cjs module && node --experimental-vm-modules node_modules/jest/bin/jest.js; node jest-run-as-module.cjs commonjs"
   },
   "dependencies": {
     "better-express-store": "^1.0.4",

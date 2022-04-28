@@ -25,14 +25,14 @@ jobs:
     - run: npm ci
       # install newman globally so we can run
       # postman collections
-    - run: npm install -g newman
-       # Copy db-template to realdb
-    - run: cd backend/database
-    - run: cp bookshop-template.db bookshop.db
-    - run: cd ../ ../   
+    - run: npm install -g newman 
       # install pm2 so we can run our node.js
       # based backend without blocking the terminal
     - run: npm install -g pm2
+    # Copy db-template to realdb
+    - run: cd backend/database
+    - run: cp bookshop-template.db bookshop.db
+    - run: cd ../ ../  
       # start up our backend
     - run: pm2 start backend/index.js
       # run our api tests

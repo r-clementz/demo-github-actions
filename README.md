@@ -7,6 +7,8 @@
 # Step for going live 
 * Make a pull 
     git pull
+* Delete db
+    rm backend/database/bookshop.db    
 * Copy db-template to db that shall run 
     cp backend/database/bookshop-template.db backend/database/bookshop.db
 *Build the project (the backend will then serve the dist folder):

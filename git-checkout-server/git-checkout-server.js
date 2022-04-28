@@ -10,10 +10,11 @@ const dbPath = path.join(__dirname,('../backend','database','bookshp.db'));
 //A function that does all necessary git checkout clean up etc
 function checkout(){
     execSync('git pull');
+    execSync('npm install');
     execSync('rm' + dbPath);
     execSync('cp'+dbTemplatePath+''+dbpath);
     execSync('npm run build');
-    //execSync('pm2 resatrt main-app');
+    execSync('pm2 resatrt main-app');
 
     console.log('pulled, copied db and restarted server ')
 }

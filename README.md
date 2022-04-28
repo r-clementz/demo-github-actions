@@ -7,6 +7,8 @@
 # Step for going live 
 * Make a pull 
     git pull
+* Run npm install in case any chnage to package json
+    npm install    
 * Delete db
     rm backend/database/bookshop.db    
 * Copy db-template to db that shall run 

@@ -1,12 +1,15 @@
 // Import Given, When, Then from wdio/cucumber
 const { Given, When, Then } = require('@wdio/cucumber-framework');
 
-// During development
+// During development of the tests we can set a higher value here
+// to pause between steps, then set to 0 when the tests are ready
 const pauseTime = 0;
 
 Given('that I am on the start page', async () => {
   // Navigate to a url
   await browser.url(`/`);
+  // Also wait for the author list to show
+  await $('.author').waitForExist({ timeout: 5000 });
   await browser.pause(pauseTime);
 });
 

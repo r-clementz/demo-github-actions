@@ -1,15 +1,16 @@
 {
-  "name": "vite-proxy-build-example",
-  "type": "module",
+  "name": "example-running-tests",
+  "type": "commonjs",
   "private": true,
   "version": "0.0.0",
   "scripts": {
     "start": "concurrently npm:backend npm:dev",
-    "backend": "nodemon backend/index",
+    "backend": "node backend/index",
     "dev": "vite",
     "build": "vite build",
+    "api-tests": "newman run api-tests/author-api.postman_collection.json",
     "wdio": "wdio run wdio.conf.js",
-    "unit-tests": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "unit-tests": "node jest-run-as-module.cjs module && node --experimental-vm-modules node_modules/jest/bin/jest.js && node jest-run-as-module.cjs commonjs"
   },
   "dependencies": {
     "better-express-store": "^1.0.4",
@@ -33,5 +34,10 @@
     "jest": "^28.0.2",
     "vite": "^2.9.0",
     "wdio-chromedriver-service": "^7.3.2"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>unit-tests/**/*.test.js"
+    ]
   }
 }

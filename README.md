@@ -1,5 +1,4 @@
-# java-21-demo-github-actions
-Example of api-tests with Newman + CI with GitHub Actions. 
-
-GitHub Actions are cool!
-And very easy to use!
+# Running three types of tests with GitHub Actions
+* Newman (API-tests)
+* WDIO (Browser/GUI-test)
+* Jest (unit testing)

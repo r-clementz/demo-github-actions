@@ -32,7 +32,7 @@ jobs:
       # start up our backend
     - run: pm2 start backend/index.js
       # run our api tests
-    - run: newman run api-tests/author-api.postman_collection.json
+    - run: npm run api-tests
 
   wdio-tests:
 
@@ -58,8 +58,7 @@ jobs:
       # start up our backend
     - run: pm2 start backend/index.js
       # install Chrome (latest stable version)
-    #- run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    - run: wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_100_amd64.deb
+    - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - run: sudo apt install ./google-chrome-stable_current_amd64.deb
       # run the WebDriverIO tests
     - run: HEADLESS_CHROME=yes WDIO_LOG_LEVEL=warn npm run wdio

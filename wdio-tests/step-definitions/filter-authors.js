@@ -7,10 +7,6 @@ const pauseTime = 0;
 
 When(/^I enter the text "([^"]*)" in the filter$/, async filterText => {
 
-  // Make sure that the authors have been displayed once 
-  // before trying to filter them
-  await $('.author').waitForExist({ timeout: 5000 });
-
   let filterFieldEl = await $('[placeholder="Filter by name"]');
   await filterFieldEl.setValue(filterText);
   await browser.pause(pauseTime);

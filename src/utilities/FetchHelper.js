@@ -1,8 +1,5 @@
 // A base class for sub classes
 // where each sub class corresponds to an entity
-
-import { createFactory } from "react/cjs/react.production.min";
-
 // in my REST-api/database
 export default class FetchHelper {
 

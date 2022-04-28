@@ -61,9 +61,7 @@ jobs:
       # based backend without blocking the terminal
     - run: npm install -g pm2
        # Copy db-template to realdb
-    - run: cd backend/database
-    - run: cp bookshop-template.db bookshop.db
-    - run: cd ../ ../   
+    - run: cp backend/databse/bookshop-template.db backend/database/bookshop.db
       # start up our backend
     - run: pm2 start backend/index.js
       # install Chrome (latest stable version) potentially not necessary
@@ -94,9 +92,7 @@ jobs:
       # based backend without blocking the terminal
     - run: npm install -g pm2
       # Copy db-template to realdb
-    - run: cd backend/database
-    - run: cp bookshop-template.db bookshop.db
-    - run: cd ../ ../   
+    - run: cp backend/databse/bookshop-template.db backend/database/bookshop.db
       # start up our backend because the methods
       # we are unit testing calls the backend
     - run: pm2 start backend/index.js

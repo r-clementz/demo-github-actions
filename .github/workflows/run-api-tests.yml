@@ -49,6 +49,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+      # npm install cos each job is done with each machine (run paralell)
     - run: npm ci
       # build our react project to the dist folder
     - run: npm run build
@@ -57,7 +58,7 @@ jobs:
     - run: npm install -g pm2
       # start up our backend
     - run: pm2 start backend/index.js
-      # install Chrome (latest stable version)
+      # install Chrome (latest stable version) potentially not necessary
     - run: wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - run: sudo apt install ./google-chrome-stable_current_amd64.deb
       # run the WebDriverIO tests

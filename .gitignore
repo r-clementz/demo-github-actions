@@ -1,3 +1,5 @@
+# Ignore that db file used by the backend since it change it changes for every login
+backend/database/bookshop.db
 # Logs
 logs
 *.log

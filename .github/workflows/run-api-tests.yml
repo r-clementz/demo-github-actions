@@ -90,7 +90,7 @@ jobs:
       # based backend without blocking the terminal
     - run: npm install -g pm2
       # Copy db-template to realdb
-    #- run: cp backend/databse/bookshop-template.db backend/database/bookshop.db
+    - run: cp backend/databse/bookshop-template.db backend/database/bookshop.db
       # start up our backend because the methods
       # we are unit testing calls the backend
     - run: pm2 start backend/index.js
@@ -100,6 +100,9 @@ jobs:
   golive:
     # demand that the 3 tests jobs suceeed before running go love
     needs: [api-tests,wdio-tests,jest-tests]
+    #Only run this job if the environment protection rules are fulfilled
+    # (this case, reviewer need to approves and we need to be on dev branch)
+    environment: "Dev server"
     runs-on: ubuntu-latest
     steps:
       #call check out sever to checkout/pull our repo

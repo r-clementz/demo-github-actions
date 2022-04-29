@@ -103,4 +103,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       #call check out sever to checkout/pull our repo
-    - run: curl http://sub.yogadev.se/URL1234567890LALALLA
+    - run: curl http://sub.yogadev.se/${{secrets.DEPLOYMENT_KEY}}

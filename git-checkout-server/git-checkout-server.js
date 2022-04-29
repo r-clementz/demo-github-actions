@@ -6,6 +6,13 @@ const {execSync} = require('child_process');
 const path = require('path');
 const dbTemplatePath = path.join(__dirname, ('../backend','database','bookshop-temolate.db'));
 const dbPath = path.join(__dirname,('../backend','database','bookshp.db'));
+//For github secret 
+const secret = process.env.DEPLOYMENY_KEY
+if(!secret) {
+    //if secret key is not provided, it will be shut down 
+    console.log('You need to provide the DEPOLOYMENT_KEY as an environmental variable');
+    Process.exit(1);
+    } 
 
 //A function that does all necessary git checkout clean up etc
 function checkout(){
@@ -22,7 +29,7 @@ function checkout(){
 //Set up a small server that only check out things if know the secret hash
 const server = http.createServer(function (req,res){
     res.end('Ok');
-    if (req.url === '/URL1234567890LALALLA')
+    if (req.url === '/' + secret)
     checkout();
 });
 //start up the server 
